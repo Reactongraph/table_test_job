@@ -10,15 +10,21 @@ function getEmailsWithCcNumbers(namesEmailsData, ccNumbersData) {
   const emailsWithCcNumbers = namesEmailsData.reduce(
     (result, { id, email, first_name, last_name }) => {
       const ccNumbers = ccNumbersData.filter(
-        ({ email: ccEmail }) => email === ccEmail
+        ({ email: ccEmail }) => email == ccEmail
       );
-      if (ccNumbers.length === 1) {
-        const { cc_number } = ccNumbers[0];
+
+      if (ccNumbers.length > 0) {
+        const ccNumber = ccNumbers?.map((cc_number) => {
+          return cc_number.cc_number;
+        });
+
+        const ccNumberStr = ccNumber.join(",");
+
         result.push({
           id,
           name: `${first_name} ${last_name}`,
           email,
-          cc_number,
+          ccNumberStr,
         });
       }
       return result;
@@ -40,9 +46,9 @@ function App() {
     { field: "id", headerName: "id", width: 100 },
     { field: "name", headerName: "name", width: 150 },
     { field: "email", headerName: "email", width: 250 },
-    { field: "cc_number", headerName: "cc_number", width: 200 },
+    { field: "ccNumberStr", headerName: "cc_number", width: 300 },
   ];
-  console.log("data", emailsWithCcNumbers);
+
   return (
     <>
       <Container maxWidth="md">
@@ -58,8 +64,6 @@ function App() {
           pageSize={5}
           rowsPerPageOptions={[5, 10, 20]}
           pageSizeOptions={[5]}
-          // checkboxSelection
-          // disableSelectionOnClick
         />
       </Container>
     </>
