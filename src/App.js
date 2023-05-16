@@ -4,6 +4,7 @@ import ccNumbersData from "./data/ccNumbersData.json";
 import "./App.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
+import Container from "@mui/material/Container";
 
 function getEmailsWithCcNumbers(namesEmailsData, ccNumbersData) {
   const emailsWithCcNumbers = namesEmailsData.reduce(
@@ -38,22 +39,29 @@ function App() {
   const columns = [
     { field: "id", headerName: "id", width: 100 },
     { field: "name", headerName: "name", width: 150 },
-    { field: "email", headerName: "email", width: 100 },
-    { field: "cc_number", headerName: "cc_number", width: 100 },
+    { field: "email", headerName: "email", width: 250 },
+    { field: "cc_number", headerName: "cc_number", width: 200 },
   ];
   console.log("data", emailsWithCcNumbers);
   return (
     <>
-      <Typography variant="h3">Table Data</Typography>
-      <DataGrid
-        rows={emailsWithCcNumbers}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5, 10, 20]}
-        pageSizeOptions={[5]}
-        // checkboxSelection
-        // disableSelectionOnClick
-      />
+      <Container maxWidth="md">
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", marginBottom: "1px" }}
+        >
+          Table Data
+        </Typography>
+        <DataGrid
+          rows={emailsWithCcNumbers}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5, 10, 20]}
+          pageSizeOptions={[5]}
+          // checkboxSelection
+          // disableSelectionOnClick
+        />
+      </Container>
     </>
   );
 }
